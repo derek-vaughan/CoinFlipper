@@ -1,10 +1,35 @@
 import random
 
-numberOfCoins = int(input("How many coins? "))
+currentSequentialCounter = 0
+highestSequentialCounter = 0
+previousResult = 0
+numberOfCoins = int(input("How many coins do you want to flip? "))
 
 print("Number of Coins: " + str(numberOfCoins))
 
+# Loop from 0 - N (N = Number of Coins Entered):
 for coin in range(numberOfCoins):
-    print(random.randint(0,1))
+   # Generate a random result (0 = head, 1 = tails) & print it
+   randomResult = random.randint(0,1)
+   print(randomResult, end="")
 
+   # Check for the case of it being the first coin to assign initial "previousResult":
+   if coin == 0:
+        previousResult = randomResult
+        highestSequentialCounter += 1
+        currentSequentialCounter += 1
+   # If it is not the first coin flip:
+   else:
+        # Check if the current coin flip is the same result as the previous one:
+        if previousResult == randomResult:
+            currentSequentialCounter += 1
+            # If the current number of sequential heads or tails exceeds the previous
+            # max, reassign to the current count:
+            if currentSequentialCounter > highestSequentialCounter:
+                highestSequentialCounter = currentSequentialCounter
+        # If the current coin flip result is different than the previous result,
+        # reset currentSeqentialCounter:
+        else:
+            currentSequentialCounter = 0
 
+print("\nHighest # of Sequential Heads or Tails: " + str(highestSequentialCounter))
